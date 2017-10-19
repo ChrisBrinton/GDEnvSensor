@@ -1,0 +1,30 @@
+Eve is a RESTful api for MongoDB that provides essentially out of the box ability to query mongoDB via an http query
+
+Documentation:
+http://eve.readthedocs.io/en/stable/
+
+Its installed using pip:
+pip install eve
+
+Its implemented by running a python script that create an eve instance.
+
+Starting the EVE instance from the command line. Depends on settings.py for EVE config:
+python run.py
+
+Starting EVE as a background process so it wont be killed when the terminal quits:
+nohup python run.py &
+
+Log file ends as nohup.out in the dir where its started (which is currently my home dir). I'll find a better home and change the start command on the non.
+
+Stopping EVE:
+ps -ef|grep run.py
+kill -9 PID
+
+Useful http queries:
+
+This query returns the columns in the projection filtered by the where clause. It doesnt require any special config within eve. Its equivalent to this SQL:
+
+select time, node_id, type, value from Sensors where type='F' and gateway_id='1A9376' and model='GDESGW1'
+
+http://74.208.159.205:5000/Sensors?where={%22gateway_id%22:%20%221A9376%22,%22type%22:%20%22F%22,%20%22model%22:%22GDESGW1%22}&projection={%22time%22:1,%22node_id%22:1,%22type%22:1,%22value%22:1,%22_id%22:0}
+
